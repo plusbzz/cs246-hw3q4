@@ -27,7 +27,7 @@ iters = [];
 for eps = [0.1 0.5 1 2]
     S = true(n,1);
     [St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);    
-    iters = [iters;eps size(data,1)];
+    iters = [iters;eps, size(data,1), (log(n)/log(1+eps))];
 end
 
 % Q4c part ii
