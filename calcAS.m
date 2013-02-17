@@ -7,7 +7,8 @@ function [AS,rhoS,cardES,cardS] = calcAS(fid,S,eps,n)
     degS = zeros(n,1);
     cardS = 0;
     cardES = 0;
-    while true
+    
+    while true % scan through the file once
         txt = fgetl(fid);
         if txt == -1
             break
@@ -17,16 +18,16 @@ function [AS,rhoS,cardES,cardS] = calcAS(fid,S,eps,n)
         source = vals(1)+1;
         target = vals(2)+1;
         
-        if S(source) == 1 && S(target) == 1
+        if S(source) & S(target)
             cardES = cardES + 1;
             degS(source) = degS(source) + 1;
         end
     end
+    
     % calculate AS
-    idx = find(S == 1);
     AS = [];
-    rhoS = cardES/cardS;
-    degS = degS(idx);
-    AS = degS <= 2*(1+eps)*rhoS;
+    rhoS = cardES/cardS;  
+    lowdeg = degS <= 2*(1+eps)*rhoS;
+    AS = S & lowdeg;
 end
 

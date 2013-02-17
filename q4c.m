@@ -21,16 +21,16 @@ while true
 end
 [m n toc]
 
-% Initialize S and St
-S  = ones(n,1);
-St = ones(n,1);
+% Initialize S and St to arrays of logical trues
+S  = true(n,1);
+St = true(n,1);
 rhoSt = 1;
 eps = 0.1;
 
 iter = 0;
-while sum(S) > 0 % S is not empty
+while any(S) % S is not empty
     [AS,rhoS,cardES,cardS] = calcAS(fid,S,eps,n); % indices of nodes to be removed
-    S(AS) = 0;
+    S(AS) = false;
     if rhoS > rhoSt
         St = S;
         rhoSt = rhoS;
