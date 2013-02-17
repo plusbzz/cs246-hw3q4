@@ -1,6 +1,6 @@
 n=0;
 tic;
-fid = fopen('livejournal-undirected-small.txt');
+fid = fopen('livejournal-undirected.txt');
 
 % read chunks of the file, iterate and calculate #nodes n
 bufferSize = 1e4;
@@ -26,16 +26,22 @@ t = toc;
 S  = true(n,1);
 St = true(n,1);
 rhoSt = 1;
-eps = 0.1;
+rhoS = 1;
+eps = 2;
+
 
 iter = 0;
 while any(S) % S is not empty
-    [AS,rhoS,cardES,cardS] = calcAS(fid,S,eps,n); % indices of nodes to be removed
-    S(AS) = false;
-    if rhoS > rhoSt
-        St = S;
-        rhoSt = rhoS;
-    end
     iter = iter + 1
+    [S,rhoS] = calcAS(fid,S,eps,n,rhoS); % indices of nodes to be removed
+    if any(S)
+        if rhoS > rhoSt
+            St = S;
+            rhoSt = rhoS;
+        end
+        sum(S)
+        rhoS
+        rhoSt
+    end
 end
 fclose(fid);

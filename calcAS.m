@@ -1,36 +1,37 @@
-function [AS,rhoS,cardES,cardS] = calcAS(fid,S,eps,n)
+function [S,rhoS] = calcAS(fid,S,eps,n,rhoS)
 %CALCAS
-
-    frewind(fid);
-
+    
+    cardES = 0;
     % Calculate degS(i)
     degS = zeros(n,1);
-    cardS = 0;
-    cardES = 0;
+    AS = true(n,1);
+    threshold = 2*(1+eps)*rhoS;
  
-    bufferSize = 1e4; % scan throught the file once
+    frewind(fid);
+    bufferSize = 1e4; % scan through the file once
     buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
     while ~isempty(buffer)
         for ix = 1:size(buffer,1)
             vals = buffer(ix,:);
             source = vals(1)+1;
-            target = vals(2)+1;
-            
-            % update |S| and |E(S)|
-            cardS = cardS + 1;
+            target = vals(2)+1;            
+            % Update degS and AS in this pass
             if S(source) & S(target)
                 cardES = cardES + 1;
                 degS(source) = degS(source) + 1;
+                if degS(source) > threshold
+                    AS(source) = false;
+                end;
             end            
         end
         buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
     end
-
     
-    % calculate AS
-    AS = [];
-    rhoS = cardES/cardS;  
-    lowdeg = degS <= 2*(1+eps)*rhoS;
-    AS = S & lowdeg;
+    % Update cardinalities and rhoS
+    S(AS) = false; % new S
+
+    cardS = sum(S);
+    cardES = cardES - sum(degS(AS))/2;
+    rhoS = cardES/cardS; % new rhoS 
 end
 
