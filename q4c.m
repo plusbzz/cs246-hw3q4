@@ -1,8 +1,9 @@
-% #nodes and # edges
 fid = fopen('livejournal-undirected-small.txt');
 m = 0;
 n = 0;
 tic;
+
+% find #nodes and #edges
 while true
     txt = fgetl(fid);
     if txt == -1
