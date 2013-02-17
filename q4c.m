@@ -22,26 +22,19 @@ end
 t = toc;
 [n toc]
 
-% Initialize S and St to arrays of logical trues
-S  = true(n,1);
-St = true(n,1);
-rhoSt = 1;
-rhoS = 1;
-eps = 2;
-
-
-iter = 0;
-while any(S) % S is not empty
-    iter = iter + 1
-    [S,rhoS] = calcAS(fid,S,eps,n,rhoS); % indices of nodes to be removed
-    if any(S)
-        if rhoS > rhoSt
-            St = S;
-            rhoSt = rhoS;
-        end
-        sum(S)
-        rhoS
-        rhoSt
-    end
+% Q4c part i
+iters = [];
+for eps = [0.1 0.5 1 2]
+    S = true(n,1);
+    [St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);    
+    iters = [iters;eps size(data,1)];
 end
+
+% Q4c part ii
+eps = 0.05;
+S = true(n,1);
+[St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);
+
+% Q4c part iii
+
 fclose(fid);

@@ -1,4 +1,4 @@
-function [S,rhoS] = calcAS(fid,S,eps,n,rhoS)
+function [S,rhoS,cardES,cardS] = calcAS(fid,S,eps,n,rhoS)
 %CALCAS
     
     cardES = 0;
