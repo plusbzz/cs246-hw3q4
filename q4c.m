@@ -1,26 +1,26 @@
-fid = fopen('livejournal-undirected-small.txt');
-m = 0;
-n = 0;
+n=0;
 tic;
+fid = fopen('livejournal-undirected-small.txt');
 
-% find #nodes and #edges
-while true
-    txt = fgetl(fid);
-    if txt == -1
-        break
+% read chunks of the file, iterate and calculate #nodes n
+bufferSize = 1e4;
+buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
+while ~isempty(buffer)
+    for ix = 1:size(buffer,1)
+        vals = buffer(ix,:);
+        source = vals(1)+1;
+        target = vals(2)+1;
+        if source > n
+            n = source;
+        end;
+        if target > n
+            n = target;
+        end;
     end
-    m = m+1;
-    [vals,cnt] = sscanf(txt,'%d\t%d');
-    source = vals(1)+1;
-    target = vals(2)+1;
-    if source > n
-        n = source;
-    end;
-    if target > n
-        n = target;
-    end;
+    buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
 end
-[m n toc]
+t = toc;
+[n toc]
 
 % Initialize S and St to arrays of logical trues
 S  = true(n,1);
