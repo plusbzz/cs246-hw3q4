@@ -1,7 +1,7 @@
 function [St,rhoSt,cardES,cardS,data] = findcommunity( fid,S,eps,n)
 %FINDCOMMUNITY: finds the largest dense community in S
 
-    St = true(n,1);
+    St = S;
     rhoSt = 1;
     rhoS  = 1;
     data = [];
