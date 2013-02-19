@@ -31,7 +31,7 @@ function [S,rhoS,cardES,cardS] = calcAS(fid,S,eps,n,rhoS)
     S(AS) = false; % new S
 
     cardS = sum(S);
-    cardES = cardES - sum(degS(AS))/2;
+    cardES = cardES - sum(degS(AS));
     rhoS = cardES/cardS; % new rhoS 
 end
 

@@ -20,7 +20,8 @@ while ~isempty(buffer)
     buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
 end
 t = toc;
-[n toc]
+n
+t
 
 % Q4c part i
 tic;
@@ -47,8 +48,7 @@ S = true(n,1);
 communities = [];
 for j = 1:20
     if any(S) % S is empty
-        tic;
-        [St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);    
+        [St,rhoSt,cardES,cardS,d] = findcommunity(fid,S,eps,n);    
         S = S - St;
         communities = [communities; j rhoSt cardES sum(S)];        
     else
@@ -57,3 +57,4 @@ for j = 1:20
 end
 
 fclose(fid);
+save('results_q4c.mat','iters','data','communities');
