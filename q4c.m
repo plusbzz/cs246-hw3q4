@@ -41,17 +41,19 @@ toc
 
 % Q4c part iii
 
+eps = 0.05;
 % upto 20 iterations
-tic;
 S = true(n,1);
 communities = [];
-for i = 1:20
+for j = 1:20
     if any(S) % S is empty
+        tic;
         [St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);    
         S = S - St;
-        communities = [communities,St];
+        communities = [communities; j rhoSt cardES sum(S)];        
+    else
+        break;
     end
 end
-toc
 
 fclose(fid);
