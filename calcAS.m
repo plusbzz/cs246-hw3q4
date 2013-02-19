@@ -1,4 +1,4 @@
-function [S,rhoS,cardES,cardS] = calcAS(fid,S,eps,n,rhoS)
+function [S,rhoS,cardES,cardS,oldCardES,oldCardS] = calcAS(fid,S,eps,n,rhoS)
 %CALCAS
     
     cardES = 0;
@@ -26,10 +26,13 @@ function [S,rhoS,cardES,cardS] = calcAS(fid,S,eps,n,rhoS)
         end
         buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
     end
-    
+    oldCardS = sum(S);
+
     % Update cardinalities and rhoS
     S(AS) = false; % new S
 
+    oldCardES = cardES;
+    
     cardS = sum(S);
     cardES = cardES - sum(degS(AS));
     rhoS = cardES/cardS; % new rhoS 

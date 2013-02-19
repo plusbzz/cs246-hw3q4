@@ -28,7 +28,7 @@ tic;
 iters = [];
 for eps = [0.1 0.5 1 2]
     S = true(n,1);
-    [St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);    
+    [St,rhoSt,cardES,cardS, oldCardES,oldCardS,data] = findcommunity(fid,S,eps,n);    
     iters = [iters;eps, size(data,1), (log(n)/log(1+eps))];
 end
 toc
@@ -37,7 +37,7 @@ toc
 tic;
 eps = 0.05;
 S = true(n,1);
-[St,rhoSt,cardES,cardS,data] = findcommunity(fid,S,eps,n);
+[St,rhoSt,cardES,cardS, oldCardES,oldCardS,data] = findcommunity(fid,S,eps,n);
 toc
 
 % Q4c part iii
@@ -48,9 +48,9 @@ S = true(n,1);
 communities = [];
 for j = 1:20
     if any(S) % S is empty
-        [St,rhoSt,cardES,cardS,d] = findcommunity(fid,S,eps,n);    
+        [St,rhoSt,cardES,cardS, oldCardES,oldCardS,d] = findcommunity(fid,S,eps,n);    
         S = S - St;
-        communities = [communities; j rhoSt cardES sum(S)];        
+        communities = [communities; j rhoSt oldCardES sum(S)];        
     else
         break;
     end
