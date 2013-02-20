@@ -33,6 +33,8 @@ for eps = [0.1 0.5 1 2]
 end
 toc
 
+
+
 % Q4c part ii
 tic;
 eps = 0.05;
@@ -58,3 +60,19 @@ end
 
 fclose(fid);
 save('results_q4c.mat','iters','data','communities');
+
+plot(iters(:,1),iters(:,2));
+title('Q4c.i: Plot of actual number of iterations vs epsilon');
+grid();
+xlabel('Epsilon');
+ylabel('#Iterations');
+saveas(gcf,'q4c_i_1','png');
+
+
+plot(iters(:,1),iters(:,3));
+title('Q4c.i: Plot of theoretical number of iterations vs epsilon');
+grid();
+xlabel('Epsilon');
+ylabel('#Iterations');
+saveas(gcf,'q4c_i_2','png');
+
