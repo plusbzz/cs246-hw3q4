@@ -52,8 +52,8 @@ for j = 1:20
     if any(S) % S is empty
         [St,rhoSt,cardES,cardS, oldCardES,oldCardS,d] = findcommunity(fid,S,eps,n);    
         S = S - St;
-        iters = size(d,1);
-        communities = [communities; j rhoSt d(iters,8) d(iters,9)];        
+        it = size(d,1);
+        communities = [communities; j rhoSt d(it,8) d(it,9)];        
     else
         break;
     end
