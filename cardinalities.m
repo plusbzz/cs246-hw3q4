@@ -19,6 +19,11 @@ function [ cardES, AS ] = cardinalities( fid,S, n, threshold )
                 if degS(source) > threshold
                     AS(source) = false;
                 end;
+                
+                degS(target) = degS(target) + 1;
+                if degS(target) > threshold
+                    AS(target) = false;
+                end;
             end            
         end
         buffer = reshape(fscanf(fid, '%d\t%d', bufferSize),2,[])' ;
